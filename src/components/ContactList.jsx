@@ -4,11 +4,11 @@ import React from 'react';
 import { jsx } from '@emotion/react'
 import PropTypes from 'prop-types';
 
-const ContactList = ({filteredContacts, originContacts, filter, onClick}) =>{
+const ContactList = ({contacts, onClick}) =>{
   
   return(
     <ul>
-        {(filter === '' ? originContacts : filteredContacts).map(contact => (
+        {contacts ? contacts.map(contact => (
           <li 
             css={{
               marginBottom: '10px',
@@ -30,7 +30,7 @@ const ContactList = ({filteredContacts, originContacts, filter, onClick}) =>{
               }}
               type='button'>Delete</button>
           </li>
-          ))
+          )) : null
         }
     </ul>
   )
