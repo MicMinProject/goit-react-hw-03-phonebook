@@ -32,10 +32,11 @@ class Phonebook extends React.Component {
     const id= form.elements.name.id;
     const number=form.elements.number.value;
     form.reset()
-    this.setState({...INITIAL_STATE})
-      if (this.state.contacts.some(contact =>contact.name === name)) 
-        {return alert(`${name} is already in contacts`)}
-        else {return this.setState({contacts: [...this.state.contacts, {name: name, number: number, id: id}]})}
+    this.setState({...INITIAL_STATE});
+    console.log(this.state.contacts)
+    this.state.contacts === null ? this.setState({contacts: [{name: name, number: number, id: id}]}) :
+      (this.state.contacts.some(contact =>contact.name === name) ? alert(`${name} is already in contacts`) :
+        this.setState({contacts: [...this.state.contacts, {name: name, number: number, id: id}]}))
   }
     
   handlerFilter = async (e) =>{
@@ -48,6 +49,7 @@ class Phonebook extends React.Component {
       this.state.contacts.splice(this.state.contacts.indexOf(contact), 1);
       this.setState((state) => ({contacts: state.contacts}))
     }})
+    this.setState({filter: ''})
   }
 
   componentDidMount(){
@@ -69,7 +71,7 @@ class Phonebook extends React.Component {
 
           <h3>Contacts</h3>
           <Filter value={this.state.filter} onChange={this.handlerFilter} />
-          <ContactList originContacts={this.state.contacts} filter={this.state.filter} filteredContacts={this.state.filteredContacts} onClick={this.handlerDelete}/>
+          <ContactList contacts={this.state.filter === '' ? this.state.contacts : this.state.filteredContacts} onClick={this.handlerDelete}/>
       </div>
 
     )
